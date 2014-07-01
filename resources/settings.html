@@ -17,17 +17,20 @@
       <div data-role="content">
 
         <div data-role="fieldcontain">
-          <label for="name">JAHA:</label>
-          <textarea cols="40" rows="8" name="name" id="name"></textarea>
+          <label for="special-feature">Invert colors</label>
+          <select name="special-feature" id="special-feature" data-role="slider">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
         </div>
 
         <div data-role="fieldcontain">
-          <label for="special-feature">Animation on every second</label>
-          <select name="special-feature" id="special-feature" data-role="slider">
-            <option value="0">None</option>
-            <option value="1">Blink </option>
-            <option value="2">Seconds Walk (Cursor goes through each digit)</option>
-          </select>
+          <label for="special-feature">Invert colors</label>
+          
+            <intput type="radio" name="sec-animation" value="0">None</option>
+            <intput type="radio" name="sec-animation" value="1">Blink</option>
+            <intput type="radio" name="sec-animation" value="2">Cursor Walk</option>
+          
         </div>
 
         <div data-role="fieldcontain">
@@ -47,6 +50,8 @@
             </fieldset>
           </div>
         </div>
+
+
 
         <div class="ui-body ui-body-b">
           <fieldset class="ui-grid-a">
