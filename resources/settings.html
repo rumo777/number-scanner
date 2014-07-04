@@ -82,7 +82,7 @@
 
       function loadOptions() 
       {
-
+        localStorage.removeItem('options');
         var options = JSON.parse( localStorage.getItem('options') );
 
         if ($.isEmptyObject(options)) {
