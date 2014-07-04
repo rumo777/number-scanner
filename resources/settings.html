@@ -45,13 +45,13 @@
 
     <fieldset data-role="controlgroup">
         <legend>Seconds Animation</legend>
-        <input class="blink" type="radio" name="radio-choice-v-2" id="blink-0" value="0" checked="checked">
+        <input class="blink" type="radio" name="blink" id="blink-0" value="0" checked="checked">
         <label for="blink-0">None</label>
-        <input class="blink" type="radio" name="radio-choice-v-2" id="blink-1" value="1">
+        <input class="blink" type="radio" name="blink" id="blink-1" value="1">
         <label for="blink-1">Second Walk</label>
-        <input class="blink" type="radio" name="radio-choice-v-2" id="blink-2" value="2">
+        <input class="blink" type="radio" name="blink" id="blink-2" value="2">
         <label for="blink-2">Blink Top Left Conner</label>
-        <input class="blink" type="radio" name="radio-choice-v-2" id="blink-3" value="3">
+        <input class="blink" type="radio" name="blink" id="blink-3" value="3">
         <label for="blink-3">Blink Bottom Rigth Conner</label>
     </fieldset>
 
@@ -66,39 +66,55 @@
       </div>
     </div>
     <script>
-      function saveOptions() {
+      function saveOptions() 
+      {
         var options = {
-          'invert': $("#invert:selected").val(),
-          'show_sec': $("#show_sec:selected").val(),
+          'invert': $("#invert option:selected").val(),
+          'show_sec': $("#show-sec option:selected").val(),
           'animation_speed': $(".animation-speed:checked").val(),
           'blink': $(".blink:checked").val(),
         }
 
-        localStorage.setItem('options', options);
+        localStorage.setItem('options', JSON.stringify(options));
 
         return options;
       }
 
-      function loadOptions() {
-        var options = localStorage.getItem('options');
-        if (!options) {
+      function loadOptions() 
+      {
+
+        var options = JSON.parse( localStorage.getItem('options') );
+
+        if ($.isEmptyObject(options)) {
           return saveOptions();
         } 
 
+        $("#invert option").prop('selected', false);
+        $("#invert").slider('refresh');
         $("#invert option").each(function(){
-          if (options.invert == $(this).val()) this.selected = true;
+          if (options.invert == $(this).val()) {
+            $(this).prop('selected', true);
+            $("#invert").slider('refresh');
+          } 
         });
 
-        $("#show_sec option").each(function(){
-          if (options.show_sec == $(this).val()) this.selected = true;
+        $("#show-sec option").prop('selected', false);
+        $("#show-sec").slider('refresh');
+        $("#show-sec option").each(function(){
+          if (options.show_sec == $(this).val()) {
+            $(this).prop('selected', true);
+            $("#show-sec").slider('refresh');
+          }
         });
 
+        $(".animation-speed").prop('checked', false).checkboxradio('refresh');
         $(".animation-speed").each(function(){
-          if (options.animation_speed == $(this).val()) this.checked = true;
+          if (options.animation_speed == $(this).val()) $(this).prop('checked', true).checkboxradio('refresh');
         });
 
+        $(".blink").prop('checked', false).checkboxradio('refresh');
         $(".blink").each(function(){
-          if (options.blink == $(this).val()) this.checked = true;
+          if (options.blink == $(this).val()) $(this).prop('checked', true).checkboxradio('refresh');
         });
       }
 
@@ -106,16 +122,11 @@
         loadOptions();
 
         $("#b-cancel").click(function() {
-          console.log("Cancel");
           document.location = "pebblejs://close";
         });
 
         $("#b-submit").click(function() {
-          console.log("Submit");
-
           var location = "pebblejs://close#" + encodeURIComponent(JSON.stringify(saveOptions()));
-          console.log("Warping to: " + location);
-          console.log(location);
           document.location = location;
         });
 
