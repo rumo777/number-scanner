@@ -11,47 +11,49 @@
   <body>
     <div data-role="page" id="main">
       <div data-role="header" class="jqm-header">
-        <h1>Configurable Pebble App</h1>
+        <h1>Number Scanner</h1>
       </div>
 
       <div data-role="content">
 
         <div data-role="fieldcontain">
-          <label for="special-feature">Invert colors</label>
-          <select name="special-feature" id="special-feature" data-role="slider">
+          <label for="invert">Invert colors</label>
+          <select name="invert" id="invert" data-role="slider">
             <option value="0">No</option>
             <option value="1">Yes</option>
           </select>
         </div>
 
-    <fieldset data-role="controlgroup">
-        <legend>Vertical:</legend>
-        <input type="radio" name="radio-choice-v-2" id="radio-choice-v-2a" value="on" checked="checked">
-        <label for="radio-choice-v-2a">One</label>
-        <input type="radio" name="radio-choice-v-2" id="radio-choice-v-2b" value="off">
-        <label for="radio-choice-v-2b">Two</label>
-        <input type="radio" name="radio-choice-v-2" id="radio-choice-v-2c" value="other">
-        <label for="radio-choice-v-2c">Three</label>
-    </fieldset>
 
         <div data-role="fieldcontain">
-          <fieldset data-role="controlgroup">
-            <legend>Choose as many snacks as you'd like:</legend>
-            <input type="checkbox" name="checkbox-cheetos" id="checkbox-cheetos" class="custom" />
-            <label for="checkbox-cheetos">Cheetos</label>
-
-            <input type="checkbox" name="checkbox-doritos" id="checkbox-doritos" class="custom" />
-            <label for="checkbox-doritos">Doritos</label>
-
-            <input type="checkbox" name="checkbox-fritos" id="checkbox-fritos" class="custom" />
-            <label for="checkbox-fritos">Fritos</label>
-
-            <input type="checkbox" name="checkbox-sunchips" id="checkbox-sunchips" class="custom" />
-            <label for="checkbox-sunchips">Sun Chips</label>
-            </fieldset>
-          </div>
+          <label for="show-sec">Show seconds</label>
+          <select name="show-sec" id="show-sec" data-role="slider">
+            <option value="0">No</option>
+            <option value="1" selected="selected">Yes</option>
+          </select>
         </div>
 
+    <fieldset data-role="controlgroup">
+        <legend>Minute animation cursor speed</legend>
+        <input class="animation-speed" type="radio" name="min-animation-speed" id="animation-speed-slow" value="50">
+        <label for="animation-speed-slow">Slow</label>
+        <input class="animation-speed" type="radio" name="min-animation-speed" id="animation-speed-medium" value="75" checked="checked">
+        <label for="animation-speed-medium">Medium</label>
+        <input class="animation-speed" type="radio" name="min-animation-speed" id="animation-speed-fast" value="100">
+        <label for="animation-speed-fast">Fast</label>
+    </fieldset>
+
+    <fieldset data-role="controlgroup">
+        <legend>Seconds Animation</legend>
+        <input class="blink" type="radio" name="radio-choice-v-2" id="blink-0" value="0" checked="checked">
+        <label for="blink-0">None</label>
+        <input class="blink" type="radio" name="radio-choice-v-2" id="blink-1" value="1">
+        <label for="blink-1">Second Walk</label>
+        <input class="blink" type="radio" name="radio-choice-v-2" id="blink-2" value="2">
+        <label for="blink-2">Blink Top Left Conner</label>
+        <input class="blink" type="radio" name="radio-choice-v-2" id="blink-3" value="3">
+        <label for="blink-3">Blink Bottom Rigth Conner</label>
+    </fieldset>
 
 
         <div class="ui-body ui-body-b">
@@ -66,17 +68,40 @@
     <script>
       function saveOptions() {
         var options = {
-          'name': $("#name").val(),
-          'special-feature': $("#special-feature").val(),
-          'checkbox-cheetos': $("#checkbox-cheetos").is(':checked'),
-          'checkbox-doritos': $("#checkbox-doritos").is(':checked'),
-          'checkbox-fritos': $("#checkbox-fritos").is(':checked'),
-          'checkbox-sunchips': $("#checkbox-sunchips").is(':checked')
+          'invert': $("#invert:selected").val(),
+          'show_sec': $("#show_sec:selected").val(),
+          'animation_speed': $(".animation-speed:checked").val(),
+          'blink': $(".blink:checked").val(),
         }
+
+        localStorage.setItem('options', options);
+
         return options;
       }
 
+      function loadOptions() {
+        var options = localStorage.getItem('options');
+
+        $("#invert option").each(function(){
+          if (options.invert == $(this).val()) this.selected = true;
+        });
+
+        $("#show_sec option").each(function(){
+          if (options.show_sec == $(this).val()) this.selected = true;
+        });
+
+        $(".animation-speed").each(function(){
+          if (options.animation_speed == $(this).val()) this.checked = true;
+        });
+
+        $(".blink").each(function(){
+          if (options.blink == $(this).val()) this.checked = true;
+        });
+      }
+
       $().ready(function() {
+        loadOptions();
+
         $("#b-cancel").click(function() {
           console.log("Cancel");
           document.location = "pebblejs://close";
