@@ -81,6 +81,9 @@
 
       function loadOptions() {
         var options = localStorage.getItem('options');
+        if (!options) {
+          return saveOptions();
+        } 
 
         $("#invert option").each(function(){
           if (options.invert == $(this).val()) this.selected = true;
