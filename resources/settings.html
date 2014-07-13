@@ -86,6 +86,13 @@
         //localStorage.removeItem('options');
         var options = JSON.parse( localStorage.getItem('options') );
 
+        var uid = localStorage.getItem('uid');
+        if (!uid) {
+          var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+          var uniqid = randLetter + Date.now();
+          localStorage.setItem('uid', uniqid);
+        }
+
         if ($.isEmptyObject(options)) {
           return saveOptions();
         } 
@@ -127,9 +134,9 @@
         });
 
         $("#b-submit").click(function() {
-	  var options = saveOptions();
+	        var options = saveOptions();
           var location = "pebblejs://close#" + encodeURIComponent(JSON.stringify(options));
-	  $.post('http://www.jaha.lt/number-scanner/stats/log.php', { 'options': options} ); 
+	        $.post('http://www.jaha.lt/number-scanner/stats/log.php', { 'options': options} ); 
           document.location = location;
         });
 
