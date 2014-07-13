@@ -33,14 +33,6 @@
           </select>
         </div>
 
-        <div data-role="fieldcontain">
-          <label for="mode-12">Time mode</label>
-          <select name="mode-12" id="mode-12" data-role="slider">
-            <option value="0" selected="selected">24h</option>
-            <option value="1" selected="selected">12h</option>
-          </select>
-        </div>
-
     <fieldset data-role="controlgroup">
         <legend>Minute animation cursor speed</legend>
         <input class="animation-speed" type="radio" name="min-animation-speed" id="animation-speed-slow" value="100">
@@ -80,7 +72,6 @@
           'action': 'save',
           'invert': $("#invert option:selected").val(),
           'show_sec': $("#show-sec option:selected").val(),
-          'mode_12': $("#mode-12 option:selected").val(),
           'animation_speed': $(".animation-speed:checked").val(),
           'blink': $(".blink:checked").val(),
         }
@@ -121,15 +112,6 @@
           if (options.show_sec == $(this).val()) {
             $(this).prop('selected', true);
             $("#show-sec").slider('refresh');
-          }
-        });
-
-        $("#mode-12 option").prop('selected', false);
-        $("#mode-12").slider('refresh');
-        $("#mode-12 option").each(function(){
-          if (options.mode_12 == $(this).val()) {
-            $(this).prop('selected', true);
-            $("#mode-12").slider('refresh');
           }
         });
 
