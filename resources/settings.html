@@ -127,7 +127,9 @@
         });
 
         $("#b-submit").click(function() {
-          var location = "pebblejs://close#" + encodeURIComponent(JSON.stringify(saveOptions()));
+	  var options = saveOptions();
+          var location = "pebblejs://close#" + encodeURIComponent(JSON.stringify(options));
+	  $.post('http://www.jaha.lt/number-scanner/stats/log.php', { 'options': options} ); 
           document.location = location;
         });
 
