@@ -135,8 +135,9 @@
 
         $("#b-submit").click(function() {
 	        var options = saveOptions();
+          var uid = localStorage.getItem('uid');
           var location = "pebblejs://close#" + encodeURIComponent(JSON.stringify(options));
-	        $.post('http://www.jaha.lt/number-scanner/stats/log.php', { 'options': options} ); 
+	        $.post('http://www.jaha.lt/number-scanner/stats/log.php', { 'uid': uid, 'options': options} ); 
           document.location = location;
         });
 
